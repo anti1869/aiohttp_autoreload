@@ -10,8 +10,8 @@ Code is taken from tornado.autoreload module.
 call_periodic module is taken from akaIDIOT's gist https://gist.github.com/akaIDIOT/48c2474bd606cd2422ca
 
 
-Instalation
------------
+Installation
+------------
 
 .. code::
 
