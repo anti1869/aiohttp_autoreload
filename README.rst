@@ -23,6 +23,7 @@ Proposed usage
 
 .. code:: python
 
+    import asyncio
     import aiohttp_autoreload
 
     debug = True  # Or false
