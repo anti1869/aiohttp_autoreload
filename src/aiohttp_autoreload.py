@@ -41,7 +41,7 @@ except ImportError:
     signal = None
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __all__ = ("start", )
 
 
@@ -55,13 +55,14 @@ _reload_attempted = False
 _io_loops = weakref.WeakKeyDictionary()
 
 
-def start(io_loop=None, check_time=2):
-
+def start(io_loop=None, check_time=2, extra_files=None):
     """Begins watching source files for changes.
 
     .. versionchanged:: 4.1
        The ``io_loop`` argument is deprecated.
     """
+
+    global _watched_files
     io_loop = io_loop or asyncio.get_event_loop()
     if io_loop in _io_loops:
         return
@@ -72,6 +73,10 @@ def start(io_loop=None, check_time=2):
     #     add_reload_hook(functools.partial(io_loop.close, all_fds=True))
     modify_times = {}
     callback = functools.partial(_reload_on_update, modify_times)
+
+    if extra_files is not None:
+        _watched_files.update(extra_files)
+
     logger.debug("Starting periodic checks for code changes")
     call_periodic(check_time, callback, loop=io_loop)
 
